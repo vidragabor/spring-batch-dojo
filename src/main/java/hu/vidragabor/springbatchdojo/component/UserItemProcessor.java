@@ -10,14 +10,11 @@ import org.springframework.stereotype.Component;
 public class UserItemProcessor implements ItemProcessor<User, User> {
 	@Override
 	public User process(final User user) {
-		
 		final User transformedUser = new User();
 		transformedUser.setAge(user.getAge());
 		transformedUser.setFirstName(user.getFirstName());
 		transformedUser.setLastName(user.getLastName());
-		
-		log.info("Converting (" + user + ") into (" + transformedUser + ")");
-		
+		log.debug("Converting (" + user + ") into (" + transformedUser + ")");
 		return transformedUser;
 	}
 }
