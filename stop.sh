@@ -1,3 +1,3 @@
 echo 'Stop Docker'
-cd src/main/docker || exit
+cd docker || exit
 docker-compose down

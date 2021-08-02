@@ -2,7 +2,7 @@ target/
 !.mvn/wrapper/maven-wrapper.jar
 !**/src/main/**/target/
 !**/src/test/**/target/
-src/main/docker/spring-batch-dojo-0.0.1-SNAPSHOT.jar
+docker/spring-batch-dojo-0.0.1-SNAPSHOT.jar
 
 ### STS ###
 .apt_generated

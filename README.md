@@ -1,9 +1,9 @@
 # Getting Started
 
 This **Spring Batch** application reads a .csv file and uploads its contents to a **Postgres** database.
-The app is running in the **Docker** container.
+The ~~app~~  database is running in the **Docker** container.
 
-Pre-built commands help launch the application. \
+Pre-built commands help launch the ~~application~~ database with Flyway. \
 `./start.sh` \
 `./stop.sh`
 
@@ -15,12 +15,16 @@ Also, a Maven wrapper (mvnw) is automatically included so that you don't have to
 
 ### Run configuration
 
-- **Start only DB in Docker** \
-The configuration has been created for Intellij users, this will only help to start the database if the application is no running but the image has not been deleted yet.
+- **SpringBatchDojoApplication** \
+  It starts the app in the local machine.
 
-### Test environment
 
-Coming soon...
+- **SpringBatchDojoApplicationTests** \
+  It starts the test.
+
+
+~~- **Start only DB in Docker** \
+The configuration has been created for Intellij users, this will only help to start the database if the application is no running but the image has not been deleted yet.~~
 
 # Used references
 
