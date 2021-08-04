@@ -15,7 +15,7 @@ public class UserStoreListener implements ItemProcessListener<User, User> {
 	
 	@Override
 	public void afterProcess(final User user, final User newUser) {
-		log.info("Old user: " + user + " change to new user: " + user);
+		log.info("Firstname of user changed: " + user.getFirstName() + " to " + newUser.getFirstName());
 	}
 	
 	@Override

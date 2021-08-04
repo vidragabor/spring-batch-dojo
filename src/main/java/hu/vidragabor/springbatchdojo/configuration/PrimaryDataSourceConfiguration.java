@@ -14,6 +14,7 @@ import org.springframework.transaction.support.TransactionTemplate;
 import javax.sql.DataSource;
 
 public class PrimaryDataSourceConfiguration {
+	
 	@Bean
 	@Primary
 	@ConfigurationProperties("spring.datasource")

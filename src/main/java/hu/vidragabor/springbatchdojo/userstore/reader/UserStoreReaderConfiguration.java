@@ -8,7 +8,9 @@ import org.springframework.batch.item.file.transform.DelimitedLineTokenizer;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.core.io.ClassPathResource;
+import org.springframework.core.io.FileUrlResource;
+
+import java.net.MalformedURLException;
 
 @Configuration
 public class UserStoreReaderConfiguration {
@@ -17,11 +19,10 @@ public class UserStoreReaderConfiguration {
 	private String fileName;
 	
 	@Bean
-	public FlatFileItemReader<User> batchDojoCsvReader() {
+	public FlatFileItemReader<User> batchDojoCsvReader() throws MalformedURLException {
 		return new FlatFileItemReaderBuilder<User>()
 				.name("batchDojoCsvReader")
-				.resource(new ClassPathResource(fileName))
-				.linesToSkip(1)
+				.resource(new FileUrlResource(fileName))
 				.delimited()
 				.delimiter(DelimitedLineTokenizer.DELIMITER_TAB)
 				.names("lastName", "firstName", "age")

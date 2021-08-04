@@ -15,17 +15,17 @@ import org.springframework.context.annotation.Configuration;
 @RequiredArgsConstructor
 public class UserStoreStepConfiguration {
 	private final StepBuilderFactory stepBuilderFactory;
-	private final FlatFileItemReader<User> personStoreReader;
+	private final FlatFileItemReader<User> userStoreReader;
 	private final UserStoreProcessor userStoreProcessor;
 	private final UserStoreWriter userStoreWriter;
 	private final UserStoreListener userStoreListener;
 	
 	@Bean
-	public Step personStoreStep() {
+	public Step userStoreStep() {
 		return stepBuilderFactory
 				.get("userStoreStep")
 				.<User, User>chunk(1)
-				.reader(personStoreReader)
+				.reader(userStoreReader)
 				.processor(userStoreProcessor)
 				.listener(userStoreListener)
 				.writer(userStoreWriter)

@@ -1,0 +1,9 @@
+{
+  "properties": [
+    {
+      "name": "fileName",
+      "type": "java.lang.String",
+      "description": "Name for file."
+    }
+  ]
+}

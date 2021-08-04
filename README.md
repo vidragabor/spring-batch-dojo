@@ -1,6 +1,6 @@
 # Getting Started
 
-This **Spring Batch** application reads a .csv file and uploads its contents to a **Postgres** database.
+This **Spring Batch** application create new values to the **Postgres** database. After that getting this values from database and create a simple .csv file and uploads its contents to another table.
 The ~~app~~  database is running in the **Docker** container.
 
 Pre-built commands help launch the ~~application~~ database with Flyway. \
