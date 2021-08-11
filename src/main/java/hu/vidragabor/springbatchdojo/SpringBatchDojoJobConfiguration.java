@@ -1,6 +1,6 @@
 package hu.vidragabor.springbatchdojo;
 
-import hu.vidragabor.springbatchdojo.component.listener.JobListener;
+import hu.vidragabor.springbatchdojo.listener.JobListener;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.batch.core.Job;

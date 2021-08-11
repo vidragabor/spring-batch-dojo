@@ -1,28 +1,29 @@
 package hu.vidragabor.springbatchdojo.userstore.reader;
 
 import hu.vidragabor.springbatchdojo.userstore.model.User;
+import org.springframework.batch.core.StepExecution;
+import org.springframework.batch.core.annotation.BeforeStep;
+import org.springframework.batch.core.configuration.annotation.StepScope;
 import org.springframework.batch.item.file.FlatFileItemReader;
 import org.springframework.batch.item.file.builder.FlatFileItemReaderBuilder;
 import org.springframework.batch.item.file.mapping.BeanWrapperFieldSetMapper;
 import org.springframework.batch.item.file.transform.DelimitedLineTokenizer;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.core.io.FileUrlResource;
-
-import java.net.MalformedURLException;
+import org.springframework.core.io.PathResource;
 
 @Configuration
 public class UserStoreReaderConfiguration {
 	
-	@Value("${fileName}")
-	private String fileName;
+	private String csvPath;
 	
 	@Bean
-	public FlatFileItemReader<User> batchDojoCsvReader() throws MalformedURLException {
+	@StepScope
+	public FlatFileItemReader<User> batchDojoCsvReader() {
 		return new FlatFileItemReaderBuilder<User>()
 				.name("batchDojoCsvReader")
-				.resource(new FileUrlResource(fileName))
+				.resource(new PathResource(csvPath))
+				.linesToSkip(1)
 				.delimited()
 				.delimiter(DelimitedLineTokenizer.DELIMITER_TAB)
 				.names("lastName", "firstName", "age")
@@ -34,6 +35,14 @@ public class UserStoreReaderConfiguration {
 		final BeanWrapperFieldSetMapper<User> userBeanWrapperFieldSetMapper = new BeanWrapperFieldSetMapper<>();
 		userBeanWrapperFieldSetMapper.setTargetType(User.class);
 		return userBeanWrapperFieldSetMapper;
+	}
+	
+	@BeforeStep
+	public void beforeStep(StepExecution stepExecution) {
+		csvPath = stepExecution
+				.getJobExecution()
+				.getExecutionContext()
+				.getString("csvPath");
 	}
 	
 }

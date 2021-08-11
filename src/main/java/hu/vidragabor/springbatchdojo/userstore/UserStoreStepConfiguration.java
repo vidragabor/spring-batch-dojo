@@ -3,6 +3,7 @@ package hu.vidragabor.springbatchdojo.userstore;
 import hu.vidragabor.springbatchdojo.userstore.listener.UserStoreListener;
 import hu.vidragabor.springbatchdojo.userstore.model.User;
 import hu.vidragabor.springbatchdojo.userstore.processor.UserStoreProcessor;
+import hu.vidragabor.springbatchdojo.userstore.reader.UserStoreReaderConfiguration;
 import hu.vidragabor.springbatchdojo.userstore.writer.UserStoreWriter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.batch.core.Step;
@@ -19,6 +20,7 @@ public class UserStoreStepConfiguration {
 	private final UserStoreProcessor userStoreProcessor;
 	private final UserStoreWriter userStoreWriter;
 	private final UserStoreListener userStoreListener;
+	private final UserStoreReaderConfiguration userStoreReaderConfiguration;
 	
 	@Bean
 	public Step userStoreStep() {
@@ -27,6 +29,7 @@ public class UserStoreStepConfiguration {
 				.<User, User>chunk(1)
 				.reader(userStoreReader)
 				.processor(userStoreProcessor)
+				.listener(userStoreReaderConfiguration)
 				.listener(userStoreListener)
 				.writer(userStoreWriter)
 				.faultTolerant()

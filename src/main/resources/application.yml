@@ -1,6 +1,8 @@
 spring:
   application:
     name: '@project.name@'
+  main:
+    banner-mode: 'off'
   datasource:
     url: jdbc:postgresql://localhost:5433/postgres
     username: postgres-user
@@ -9,4 +11,5 @@ spring:
   batch:
     jdbc:
       initialize-schema: always
-fileName: feladat_1.csv
+file:
+  path: src/main/resources/source_person_
