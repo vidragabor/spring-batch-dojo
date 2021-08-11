@@ -23,6 +23,7 @@ public class SpringBatchDojoJobConfiguration {
 	
 	private final JobBuilderFactory jobBuilderFactory;
 	private final JobListener jobListener;
+	private final Step prepareStep;
 	private final Step createFileStep;
 	private final Step userStoreStep;
 	
@@ -33,7 +34,8 @@ public class SpringBatchDojoJobConfiguration {
 				.get(appName)
 				.incrementer(new RunIdIncrementer())
 				.listener(jobListener)
-				.start(createFileStep)
+				.start(prepareStep)
+				.next(createFileStep)
 				.next(userStoreStep)
 				.build();
 	}

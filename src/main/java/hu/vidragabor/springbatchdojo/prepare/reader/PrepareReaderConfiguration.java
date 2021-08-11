@@ -1,6 +1,6 @@
-package hu.vidragabor.springbatchdojo.source.reader;
+package hu.vidragabor.springbatchdojo.prepare.reader;
 
-import hu.vidragabor.springbatchdojo.source.model.Source;
+import hu.vidragabor.springbatchdojo.prepare.model.Prepare;
 import org.springframework.batch.item.database.JdbcPagingItemReader;
 import org.springframework.batch.item.database.Order;
 import org.springframework.batch.item.database.builder.JdbcPagingItemReaderBuilder;
@@ -13,16 +13,16 @@ import javax.sql.DataSource;
 import java.util.Map;
 
 @Configuration
-public class SourceReaderConfiguration {
+public class PrepareReaderConfiguration {
 	
 	private static final String SOURCE_COLUMNS = "id, first_name, last_name, age";
-	private static final String SOURCE_TABLE_NAME = "source";
+	private static final String SOURCE_TABLE_NAME = "prepare";
 	private static final int DEFAULT_SIZE = 30;
 	
 	@Bean
-	public JdbcPagingItemReader<Source> sourceReader(DataSource dataSource) {
-		JdbcPagingItemReaderBuilder<Source> builder = new JdbcPagingItemReaderBuilder<Source>()
-				.name("sourceReader")
+	public JdbcPagingItemReader<Prepare> prepareReader(DataSource dataSource) {
+		JdbcPagingItemReaderBuilder<Prepare> builder = new JdbcPagingItemReaderBuilder<Prepare>()
+				.name("prepareReader")
 				.rowMapper(getRowMapper())
 				.selectClause(getSelectClause())
 				.fromClause(getFromClause())
@@ -34,8 +34,8 @@ public class SourceReaderConfiguration {
 		return builder.build();
 	}
 	
-	private RowMapper<Source> getRowMapper() {
-		return BeanPropertyRowMapper.newInstance(Source.class);
+	private RowMapper<Prepare> getRowMapper() {
+		return BeanPropertyRowMapper.newInstance(Prepare.class);
 	}
 	
 	private String getSelectClause() {
@@ -61,4 +61,5 @@ public class SourceReaderConfiguration {
 	private boolean getSaveState() {
 		return false;
 	}
+	
 }

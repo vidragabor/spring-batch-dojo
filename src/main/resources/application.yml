@@ -11,5 +11,11 @@ spring:
   batch:
     jdbc:
       initialize-schema: always
+prepare:
+  datasource:
+    url: jdbc:postgresql://localhost:5433/postgres
+    username: postgres-user
+    password: postgres-1234
+    driverClassName: org.postgresql.Driver
 file:
   path: src/main/resources/source_person_
