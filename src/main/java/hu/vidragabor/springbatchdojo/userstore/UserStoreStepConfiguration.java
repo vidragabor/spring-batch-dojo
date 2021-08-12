@@ -1,7 +1,7 @@
 package hu.vidragabor.springbatchdojo.userstore;
 
 import hu.vidragabor.springbatchdojo.userstore.listener.UserStoreListener;
-import hu.vidragabor.springbatchdojo.userstore.model.User;
+import hu.vidragabor.springbatchdojo.model.User;
 import hu.vidragabor.springbatchdojo.userstore.processor.UserStoreProcessor;
 import hu.vidragabor.springbatchdojo.userstore.reader.UserStoreReaderConfiguration;
 import hu.vidragabor.springbatchdojo.userstore.writer.UserStoreWriter;

@@ -1,6 +1,6 @@
 package hu.vidragabor.springbatchdojo.source.reader;
 
-import hu.vidragabor.springbatchdojo.source.model.Source;
+import hu.vidragabor.springbatchdojo.model.User;
 import org.springframework.batch.item.database.JdbcPagingItemReader;
 import org.springframework.batch.item.database.Order;
 import org.springframework.batch.item.database.builder.JdbcPagingItemReaderBuilder;
@@ -20,8 +20,8 @@ public class SourceReaderConfiguration {
 	private static final int DEFAULT_SIZE = 30;
 	
 	@Bean
-	public JdbcPagingItemReader<Source> sourceReader(DataSource dataSource) {
-		JdbcPagingItemReaderBuilder<Source> builder = new JdbcPagingItemReaderBuilder<Source>()
+	public JdbcPagingItemReader<User> sourceReader(DataSource dataSource) {
+		JdbcPagingItemReaderBuilder<User> builder = new JdbcPagingItemReaderBuilder<User>()
 				.name("sourceReader")
 				.rowMapper(getRowMapper())
 				.selectClause(getSelectClause())
@@ -34,8 +34,8 @@ public class SourceReaderConfiguration {
 		return builder.build();
 	}
 	
-	private RowMapper<Source> getRowMapper() {
-		return BeanPropertyRowMapper.newInstance(Source.class);
+	private RowMapper<User> getRowMapper() {
+		return BeanPropertyRowMapper.newInstance(User.class);
 	}
 	
 	private String getSelectClause() {

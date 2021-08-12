@@ -1,6 +1,6 @@
 package hu.vidragabor.springbatchdojo;
 
-import hu.vidragabor.springbatchdojo.userstore.model.User;
+import hu.vidragabor.springbatchdojo.model.User;
 import hu.vidragabor.springbatchdojo.userstore.processor.UserStoreProcessor;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;

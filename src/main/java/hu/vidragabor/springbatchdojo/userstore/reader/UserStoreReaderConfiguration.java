@@ -1,6 +1,6 @@
 package hu.vidragabor.springbatchdojo.userstore.reader;
 
-import hu.vidragabor.springbatchdojo.userstore.model.User;
+import hu.vidragabor.springbatchdojo.model.User;
 import org.springframework.batch.core.StepExecution;
 import org.springframework.batch.core.annotation.BeforeStep;
 import org.springframework.batch.core.configuration.annotation.StepScope;

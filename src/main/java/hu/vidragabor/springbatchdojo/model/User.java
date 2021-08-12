@@ -1,4 +1,4 @@
-package hu.vidragabor.springbatchdojo.prepare.model;
+package hu.vidragabor.springbatchdojo.model;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class Prepare {
+public class User {
 	private long id;
 	private String firstName;
 	private String lastName;

@@ -1,6 +1,6 @@
 package hu.vidragabor.springbatchdojo.source.writer;
 
-import hu.vidragabor.springbatchdojo.source.model.Source;
+import hu.vidragabor.springbatchdojo.model.User;
 import org.springframework.batch.core.StepExecution;
 import org.springframework.batch.core.annotation.AfterStep;
 import org.springframework.batch.item.file.FlatFileHeaderCallback;
@@ -27,9 +27,9 @@ public class SourceWriterConfiguration {
 	private String csvPath;
 	
 	@Bean
-	public FlatFileItemWriter<Source> writer() {
+	public FlatFileItemWriter<User> writer() {
 		csvPath = generateCsvPath();
-		return new FlatFileItemWriterBuilder<Source>()
+		return new FlatFileItemWriterBuilder<User>()
 				.name("batchDojoCsvWriter")
 				.resource(new FileSystemResource(csvPath))
 				.lineAggregator(getDelimitedLineAggregator())
@@ -41,15 +41,15 @@ public class SourceWriterConfiguration {
 		return filePath + LocalDateTime.now().toString().replace(":", "_") + ".csv";
 	}
 	
-	private DelimitedLineAggregator<Source> getDelimitedLineAggregator() {
-		final DelimitedLineAggregator<Source> lineAggregator = new DelimitedLineAggregator<>();
+	private DelimitedLineAggregator<User> getDelimitedLineAggregator() {
+		final DelimitedLineAggregator<User> lineAggregator = new DelimitedLineAggregator<>();
 		lineAggregator.setDelimiter(DelimitedLineTokenizer.DELIMITER_TAB);
 		lineAggregator.setFieldExtractor(getBeanWrapperFieldExtractor());
 		return lineAggregator;
 	}
 	
-	private BeanWrapperFieldExtractor<Source> getBeanWrapperFieldExtractor() {
-		final BeanWrapperFieldExtractor<Source> fieldExtractor = new BeanWrapperFieldExtractor<>();
+	private BeanWrapperFieldExtractor<User> getBeanWrapperFieldExtractor() {
+		final BeanWrapperFieldExtractor<User> fieldExtractor = new BeanWrapperFieldExtractor<>();
 		fieldExtractor.setNames(new String[]{"lastName", "firstName", "age"});
 		return fieldExtractor;
 	}

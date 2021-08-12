@@ -29,7 +29,7 @@ public class SpringBatchDojoJobConfiguration {
 	
 	@Bean
 	public Job userStoreJob() {
-		log.info("Creating \"userStoreJob\" job.");
+		log.info("Creating \"{}\" job.", appName);
 		return jobBuilderFactory
 				.get(appName)
 				.incrementer(new RunIdIncrementer())

@@ -1,6 +1,6 @@
 package hu.vidragabor.springbatchdojo.userstore.writer;
 
-import hu.vidragabor.springbatchdojo.userstore.model.User;
+import hu.vidragabor.springbatchdojo.model.User;
 import hu.vidragabor.springbatchdojo.userstore.repositroy.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.batch.item.ItemWriter;

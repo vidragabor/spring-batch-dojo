@@ -1,7 +1,7 @@
 package hu.vidragabor.springbatchdojo.source;
 
+import hu.vidragabor.springbatchdojo.model.User;
 import hu.vidragabor.springbatchdojo.source.listener.SourceStepListener;
-import hu.vidragabor.springbatchdojo.source.model.Source;
 import hu.vidragabor.springbatchdojo.source.writer.SourceWriterConfiguration;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -18,8 +18,8 @@ import org.springframework.context.annotation.Configuration;
 public class SourceStepConfiguration {
 	
 	private final StepBuilderFactory stepBuilderFactory;
-	private final JdbcPagingItemReader<Source> sourceReader;
-	private final FlatFileItemWriter<Source> csvFileFromSourceWriterConfiguration;
+	private final JdbcPagingItemReader<User> sourceReader;
+	private final FlatFileItemWriter<User> csvFileFromSourceWriterConfiguration;
 	private final SourceWriterConfiguration sourceWriterConfiguration;
 	private final SourceStepListener sourceStepListener;
 	
@@ -27,7 +27,7 @@ public class SourceStepConfiguration {
 	public Step createFileStep() {
 		return stepBuilderFactory
 				.get("createFileStep")
-				.<Source, Source>chunk(1)
+				.<User, User>chunk(1)
 				.reader(sourceReader)
 				.writer(csvFileFromSourceWriterConfiguration)
 				.listener(sourceWriterConfiguration)

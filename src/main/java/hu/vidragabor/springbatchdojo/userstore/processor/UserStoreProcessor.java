@@ -1,6 +1,6 @@
 package hu.vidragabor.springbatchdojo.userstore.processor;
 
-import hu.vidragabor.springbatchdojo.userstore.model.User;
+import hu.vidragabor.springbatchdojo.model.User;
 import lombok.NonNull;
 import org.springframework.batch.item.ItemProcessor;
 import org.springframework.stereotype.Component;

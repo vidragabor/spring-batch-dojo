@@ -1,6 +1,6 @@
 package hu.vidragabor.springbatchdojo.prepare.reader;
 
-import hu.vidragabor.springbatchdojo.prepare.model.Prepare;
+import hu.vidragabor.springbatchdojo.model.User;
 import org.springframework.batch.item.database.JdbcPagingItemReader;
 import org.springframework.batch.item.database.Order;
 import org.springframework.batch.item.database.builder.JdbcPagingItemReaderBuilder;
@@ -15,13 +15,13 @@ import java.util.Map;
 @Configuration
 public class PrepareReaderConfiguration {
 	
-	private static final String SOURCE_COLUMNS = "id, first_name, last_name, age";
-	private static final String SOURCE_TABLE_NAME = "prepare";
+	private static final String PREPARE_COLUMNS = "id, first_name, last_name, age";
+	private static final String PREPARE_TABLE_NAME = "prepare";
 	private static final int DEFAULT_SIZE = 30;
 	
 	@Bean
-	public JdbcPagingItemReader<Prepare> prepareReader(DataSource dataSource) {
-		JdbcPagingItemReaderBuilder<Prepare> builder = new JdbcPagingItemReaderBuilder<Prepare>()
+	public JdbcPagingItemReader<User> prepareReader(DataSource dataSource) {
+		JdbcPagingItemReaderBuilder<User> builder = new JdbcPagingItemReaderBuilder<User>()
 				.name("prepareReader")
 				.rowMapper(getRowMapper())
 				.selectClause(getSelectClause())
@@ -34,16 +34,16 @@ public class PrepareReaderConfiguration {
 		return builder.build();
 	}
 	
-	private RowMapper<Prepare> getRowMapper() {
-		return BeanPropertyRowMapper.newInstance(Prepare.class);
+	private RowMapper<User> getRowMapper() {
+		return BeanPropertyRowMapper.newInstance(User.class);
 	}
 	
 	private String getSelectClause() {
-		return SOURCE_COLUMNS;
+		return PREPARE_COLUMNS;
 	}
 	
 	private String getFromClause() {
-		return SOURCE_TABLE_NAME;
+		return PREPARE_TABLE_NAME;
 	}
 	
 	public Map<String, Order> getSortKey() {
