@@ -1,26 +1,53 @@
-version: '3'
+version: "3"
+
 services:
+
+  postgres-remote:
+    image: "postgres:13.1-alpine"
+    container_name: "postgres-remote"
+    ports:
+      - "5434:5432"
+    environment:
+      - POSTGRES_USER=postgres-user
+      - POSTGRES_PASSWORD=postgres-1234
+  flyway-remote:
+    image: "flyway/flyway"
+    container_name: "flyway-remote"
+    environment:
+      - FLYWAY_USER=postgres-user
+      - FLYWAY_PASSWORD=postgres-1234
+      - FLYWAY_URL=jdbc:postgresql://postgres-remote:5432/postgres
+      - FLYWAY_GROUP=true
+    command: -locations=filesystem:/flyway/sql -connectRetries=60 migrate
+    volumes:
+      - ../flyway/remote/sql:/flyway/sql
+    depends_on:
+      - postgres-remote
+
   postgres:
-    image: 'postgres:13.1-alpine'
-    container_name: postgres
+    image: "postgres:13.1-alpine"
+    container_name: "postgres"
     ports:
       - "5433:5432"
     environment:
       - POSTGRES_USER=postgres-user
       - POSTGRES_PASSWORD=postgres-1234
+    volumes:
+      - ../tmp/:/tmp/
   flyway:
-    container_name: flyway
+    image: "flyway/flyway"
+    container_name: "flyway"
     environment:
       - FLYWAY_USER=postgres-user
       - FLYWAY_PASSWORD=postgres-1234
       - FLYWAY_URL=jdbc:postgresql://postgres:5432/postgres
       - FLYWAY_GROUP=true
-    image: "flyway/flyway"
     command: -locations=filesystem:/flyway/sql -connectRetries=60 migrate
     volumes:
       - ../flyway/sql:/flyway/sql
     depends_on:
       - postgres
+
 #  app:
 #    image: 'spring-batch-dojo:latest'
 #    build:

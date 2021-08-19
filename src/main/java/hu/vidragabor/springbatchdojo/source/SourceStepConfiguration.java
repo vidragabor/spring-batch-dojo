@@ -19,7 +19,7 @@ public class SourceStepConfiguration {
 	
 	private final StepBuilderFactory stepBuilderFactory;
 	private final JdbcPagingItemReader<User> sourceReader;
-	private final FlatFileItemWriter<User> csvFileFromSourceWriterConfiguration;
+	private final FlatFileItemWriter<User> batchDojoCsvWriter;
 	private final SourceWriterConfiguration sourceWriterConfiguration;
 	private final SourceStepListener sourceStepListener;
 	
@@ -27,9 +27,9 @@ public class SourceStepConfiguration {
 	public Step createFileStep() {
 		return stepBuilderFactory
 				.get("createFileStep")
-				.<User, User>chunk(1)
+				.<User, User>chunk(30)
 				.reader(sourceReader)
-				.writer(csvFileFromSourceWriterConfiguration)
+				.writer(batchDojoCsvWriter)
 				.listener(sourceWriterConfiguration)
 				.listener(sourceStepListener)
 				.build();

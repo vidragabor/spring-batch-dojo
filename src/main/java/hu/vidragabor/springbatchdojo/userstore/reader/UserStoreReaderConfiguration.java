@@ -23,7 +23,7 @@ public class UserStoreReaderConfiguration {
 		return new FlatFileItemReaderBuilder<User>()
 				.name("batchDojoCsvReader")
 				.resource(new PathResource(csvPath))
-				.linesToSkip(1)
+				//.linesToSkip(1)
 				.delimited()
 				.delimiter(DelimitedLineTokenizer.DELIMITER_TAB)
 				.names("lastName", "firstName", "age")

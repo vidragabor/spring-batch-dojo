@@ -1,13 +1,13 @@
-CREATE TABLE IF NOT EXISTS "prepare"
+CREATE TABLE IF NOT EXISTS "remote_source"
 (
     id         BIGSERIAL NOT NULL
-        CONSTRAINT prepare_pk PRIMARY KEY,
+        CONSTRAINT remote_source_pk PRIMARY KEY,
     first_name TEXT      NOT NULL,
     last_name  TEXT      NOT NULL,
     age        integer   NOT NULL
 );
 
-INSERT INTO "prepare" (id, first_name, last_name, age)
+INSERT INTO "remote_source" (id, first_name, last_name, age)
 VALUES (1, 'Elek', 'Teszt', 30),
        (2, 'Réka', 'Nyom', 21),
        (3, 'Zita', 'Para', 32),

@@ -1,31 +1,32 @@
-package hu.vidragabor.springbatchdojo.prepare;
+package hu.vidragabor.springbatchdojo.remotedump;
 
 import hu.vidragabor.springbatchdojo.model.User;
-import hu.vidragabor.springbatchdojo.prepare.writer.PrepareWriter;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.batch.core.Step;
 import org.springframework.batch.core.configuration.annotation.StepBuilderFactory;
 import org.springframework.batch.item.database.JdbcPagingItemReader;
+import org.springframework.batch.item.file.FlatFileItemWriter;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
-@Slf4j
 @Configuration
 @RequiredArgsConstructor
-public class PrepareStepConfiguration {
+public class RemoteDumpStepConfiguration {
 	
 	private final StepBuilderFactory stepBuilderFactory;
-	private final JdbcPagingItemReader<User> prepareReader;
-	private final PrepareWriter prepareWriter;
+	private final FlatFileItemWriter<User> remoteDumpWriter;
+	private final JdbcPagingItemReader<User> remoteDumpReader;
 	
 	@Bean
-	public Step prepareStep() {
+	public Step remoteDumpStep() {
 		return stepBuilderFactory
-				.get("prepareStep")
-				.<User, User>chunk(1)
-				.reader(prepareReader)
-				.writer(prepareWriter)
+				.get("remoteDumpStep")
+				.<User, User>chunk(30)
+				.faultTolerant()
+				.skipLimit(3)
+				.skip(Exception.class)
+				.reader(remoteDumpReader)
+				.writer(remoteDumpWriter)
 				.build();
 	}
 	

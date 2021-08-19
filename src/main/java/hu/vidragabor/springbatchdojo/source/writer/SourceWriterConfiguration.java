@@ -21,13 +21,13 @@ public class SourceWriterConfiguration {
 	
 	private static final String HEADER = "last_name\tfirst_name\tage";
 	
-	@Value("${file.path}")
-	private String filePath;
+	@Value("${file.path}/${file.name-prefix}")
+	private String file;
 	
 	private String csvPath;
 	
 	@Bean
-	public FlatFileItemWriter<User> writer() {
+	public FlatFileItemWriter<User> batchDojoCsvWriter() {
 		csvPath = generateCsvPath();
 		return new FlatFileItemWriterBuilder<User>()
 				.name("batchDojoCsvWriter")
@@ -38,7 +38,7 @@ public class SourceWriterConfiguration {
 	}
 	
 	private String generateCsvPath() {
-		return filePath + LocalDateTime.now().toString().replace(":", "_") + ".csv";
+		return file + LocalDateTime.now().toString().replace(":", "_") + ".csv";
 	}
 	
 	private DelimitedLineAggregator<User> getDelimitedLineAggregator() {

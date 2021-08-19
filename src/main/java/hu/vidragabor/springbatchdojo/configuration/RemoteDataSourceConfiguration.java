@@ -12,27 +12,27 @@ import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import javax.sql.DataSource;
 
 @Configuration
-public class PrepareDataSourceConfiguration {
+public class RemoteDataSourceConfiguration {
 	
 	@Bean
-	@ConfigurationProperties("prepare.datasource")
-	public DataSourceProperties prepareDataSourceProperties() {
+	@ConfigurationProperties("remote.datasource")
+	public DataSourceProperties remoteDataSourceProperties() {
 		return new DataSourceProperties();
 	}
 	
 	@Bean
-	@ConditionalOnBean(name = "prepareDataSourceProperties")
-	public HikariDataSource prepareDataSource(@Qualifier("prepareDataSourceProperties") DataSourceProperties prepareDataSourceProperties) {
-		return prepareDataSourceProperties
+	@ConditionalOnBean(name = "remoteDataSourceProperties")
+	public HikariDataSource remoteDataSource(@Qualifier("remoteDataSourceProperties") DataSourceProperties remoteDataSourceProperties) {
+		return remoteDataSourceProperties
 				.initializeDataSourceBuilder()
 				.type(HikariDataSource.class)
 				.build();
 	}
 	
 	@Bean
-	@ConditionalOnBean(name = "prepareDataSource")
-	public NamedParameterJdbcTemplate prepareNamedParameterJdbcTemplate(@Qualifier("prepareDataSource") DataSource prepareDataSource) {
-		return new NamedParameterJdbcTemplate(prepareDataSource);
+	@ConditionalOnBean(name = "remoteDataSource")
+	public NamedParameterJdbcTemplate remoteNamedParameterJdbcTemplate(@Qualifier("remoteDataSource") DataSource remoteDataSource) {
+		return new NamedParameterJdbcTemplate(remoteDataSource);
 	}
 	
 }

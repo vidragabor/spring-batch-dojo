@@ -1,9 +1,10 @@
-package hu.vidragabor.springbatchdojo.prepare.reader;
+package hu.vidragabor.springbatchdojo.remotedump.reader;
 
 import hu.vidragabor.springbatchdojo.model.User;
 import org.springframework.batch.item.database.JdbcPagingItemReader;
 import org.springframework.batch.item.database.Order;
 import org.springframework.batch.item.database.builder.JdbcPagingItemReaderBuilder;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
@@ -13,16 +14,16 @@ import javax.sql.DataSource;
 import java.util.Map;
 
 @Configuration
-public class PrepareReaderConfiguration {
+public class RemoteDumpReaderConfiguration {
 	
 	private static final String PREPARE_COLUMNS = "id, first_name, last_name, age";
-	private static final String PREPARE_TABLE_NAME = "prepare";
+	private static final String PREPARE_TABLE_NAME = "remote_source";
 	private static final int DEFAULT_SIZE = 30;
 	
 	@Bean
-	public JdbcPagingItemReader<User> prepareReader(DataSource dataSource) {
+	public JdbcPagingItemReader<User> remoteDumpReader(@Qualifier("remoteDataSource") DataSource dataSource) {
 		JdbcPagingItemReaderBuilder<User> builder = new JdbcPagingItemReaderBuilder<User>()
-				.name("prepareReader")
+				.name("remoteDumpReader")
 				.rowMapper(getRowMapper())
 				.selectClause(getSelectClause())
 				.fromClause(getFromClause())
