@@ -26,3 +26,8 @@ remote:
     file:
       path: tmp
       name: remote_user.csv
+
+mockaroo:
+  name: mockaroo
+  url: https://my.api.mockaroo.com
+  key: 63304c70

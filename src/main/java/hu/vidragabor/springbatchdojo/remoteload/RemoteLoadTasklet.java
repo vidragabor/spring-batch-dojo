@@ -18,9 +18,10 @@ public class RemoteLoadTasklet implements Tasklet {
 	private final RemoteLoadRepository remoteLoadRepository;
 	
 	@Override
-	public RepeatStatus execute(@NonNull StepContribution stepContribution, @NonNull ChunkContext chunkContext) {
+	public RepeatStatus execute(@NonNull StepContribution stepContribution, @NonNull ChunkContext chunkContext) throws Exception {
 		log.info("Loading dump to table");
-		remoteLoadRepository.loadDumpIntoTable();
+		final long copyCount = remoteLoadRepository.loadDumpIntoTable();
+		log.info("Copied {} items to database.", copyCount);
 		return RepeatStatus.FINISHED;
 	}
 	

@@ -1,6 +1,9 @@
 package hu.vidragabor.springbatchdojo.configuration;
 
 import com.zaxxer.hikari.HikariDataSource;
+import org.postgresql.PGConnection;
+import org.postgresql.copy.CopyManager;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
 import org.springframework.boot.autoconfigure.jdbc.DataSourceProperties;
 import org.springframework.boot.context.properties.ConfigurationProperties;
@@ -13,6 +16,8 @@ import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.support.TransactionTemplate;
 
 import javax.sql.DataSource;
+import java.sql.Connection;
+import java.sql.SQLException;
 
 @Configuration
 public class PrimaryDataSourceConfiguration {
@@ -52,5 +57,13 @@ public class PrimaryDataSourceConfiguration {
 	@ConditionalOnBean(name = "platformTransactionManager")
 	public TransactionTemplate transactionTemplate(PlatformTransactionManager platformTransactionManager) {
 		return new TransactionTemplate(platformTransactionManager);
+	}
+	
+	@Bean
+	@ConditionalOnBean(name = "dataSource")
+	public CopyManager copyManager(@Qualifier("dataSource") HikariDataSource dataSource) throws SQLException {
+		final Connection conn = dataSource.getConnection();
+		final PGConnection pgConnection = conn.unwrap(PGConnection.class);
+		return pgConnection.getCopyAPI();
 	}
 }

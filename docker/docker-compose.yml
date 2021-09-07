@@ -32,8 +32,6 @@ services:
     environment:
       - POSTGRES_USER=postgres-user
       - POSTGRES_PASSWORD=postgres-1234
-    volumes:
-      - ../tmp/:/tmp/
   flyway:
     image: "flyway/flyway"
     container_name: "flyway"

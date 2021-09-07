@@ -9,11 +9,13 @@ import org.springframework.batch.core.configuration.annotation.EnableBatchProces
 import org.springframework.batch.core.configuration.annotation.JobBuilderFactory;
 import org.springframework.batch.core.launch.support.RunIdIncrementer;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.cloud.openfeign.EnableFeignClients;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 @Slf4j
 @Configuration
+@EnableFeignClients
 @EnableBatchProcessing
 @RequiredArgsConstructor
 public class SpringBatchDojoJobConfiguration {
@@ -27,6 +29,8 @@ public class SpringBatchDojoJobConfiguration {
 	private final Step remoteLoadStep;
 	private final Step createFileStep;
 	private final Step userStoreStep;
+	private final Step apiMarketplaceStep;
+	private final Step apiStatusStep;
 	
 	@Bean
 	public Job userStoreJob() {
@@ -38,6 +42,8 @@ public class SpringBatchDojoJobConfiguration {
 				.next(remoteLoadStep)
 				.next(createFileStep)
 				.next(userStoreStep)
+				.next(apiMarketplaceStep)
+				.next(apiStatusStep)
 				.listener(jobListener)
 				.build();
 	}
