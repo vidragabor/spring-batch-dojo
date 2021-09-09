@@ -15,6 +15,9 @@ import java.nio.file.Path;
 @Component
 public class JobListener extends JobExecutionListenerSupport {
 	
+	@Value("${remote.dump.file.delete}")
+	private boolean fileDeletable;
+	
 	@Value("${remote.dump.file.path}")
 	private String path;
 	
@@ -22,8 +25,13 @@ public class JobListener extends JobExecutionListenerSupport {
 	@Override
 	public void afterJob(JobExecution jobExecution) {
 		if (jobExecution.getStatus() == BatchStatus.COMPLETED) {
-			if (FileSystemUtils.deleteRecursively(Path.of(path))) {
-				log.info("Delete \"{}\" folder!", path);
+			if (fileDeletable) {
+				log.info("Remote dump file is deletable.");
+				if (FileSystemUtils.deleteRecursively(Path.of(path))) {
+					log.info("Delete \"{}\" folder!", path);
+				}
+			} else {
+				log.info("Remote dump file is not deletable.");
 			}
 		}
 	}

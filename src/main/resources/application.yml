@@ -26,8 +26,20 @@ remote:
     file:
       path: tmp
       name: remote_user.csv
+      delete: true
 
 mockaroo:
   name: mockaroo
   url: https://my.api.mockaroo.com
   key: 63304c70
+
+ftp:
+  host: localhost
+  port: 2121
+  username: admin
+  password: admin
+  timeout: 5000
+  file:
+    name: new_file.csv
+  upload:
+    threshold: 5

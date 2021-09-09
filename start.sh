@@ -6,4 +6,8 @@ echo 'Rebuild Docker image'
 cd docker || exit
 docker-compose down
 docker rmi spring-batch-dojo:latest
-docker-compose up
+docker-compose up -d
+
+echo 'Running a local Apache FTP server'
+cd ../bin/apache-ftpserver || exit
+./bin/ftpd.sh res/conf/ftpd-typical.xml

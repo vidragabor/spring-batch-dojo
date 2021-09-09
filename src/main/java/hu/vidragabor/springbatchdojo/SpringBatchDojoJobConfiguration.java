@@ -1,5 +1,6 @@
 package hu.vidragabor.springbatchdojo;
 
+import hu.vidragabor.springbatchdojo.ftp.decider.FtpUploadDecider;
 import hu.vidragabor.springbatchdojo.listener.JobListener;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -31,6 +32,7 @@ public class SpringBatchDojoJobConfiguration {
 	private final Step userStoreStep;
 	private final Step apiMarketplaceStep;
 	private final Step apiStatusStep;
+	private final Step ftpUploadStep;
 	
 	@Bean
 	public Job userStoreJob() {
@@ -44,6 +46,7 @@ public class SpringBatchDojoJobConfiguration {
 				.next(userStoreStep)
 				.next(apiMarketplaceStep)
 				.next(apiStatusStep)
+				.next(ftpUploadStep)
 				.listener(jobListener)
 				.build();
 	}
