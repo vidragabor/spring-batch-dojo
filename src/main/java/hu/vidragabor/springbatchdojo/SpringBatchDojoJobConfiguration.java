@@ -1,6 +1,5 @@
 package hu.vidragabor.springbatchdojo;
 
-import hu.vidragabor.springbatchdojo.ftp.decider.FtpUploadDecider;
 import hu.vidragabor.springbatchdojo.listener.JobListener;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

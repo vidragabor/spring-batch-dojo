@@ -1,0 +1,7 @@
+remote:
+  dump:
+    file:
+      delete: false
+
+expected:
+  file: "src/test/resources/file/sample.csv"
