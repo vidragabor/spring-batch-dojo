@@ -31,7 +31,7 @@ public class FtpUploadTasklet implements Tasklet {
 		if (ftpService.uploadFile(new File(origDumpFile), remoteFileName)) {
 			log.info("File uploading is successful!");
 		} else {
-			log.error("Unsuccessful file uploading!");
+			throw new IllegalStateException("Unsuccessful file uploading!");
 		}
 		return RepeatStatus.FINISHED;
 	}

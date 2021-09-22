@@ -1,7 +1,5 @@
 package hu.vidragabor.springbatchdojo;
 
-import hu.vidragabor.springbatchdojo.configuration.PrimaryDataSourceConfiguration;
-import hu.vidragabor.springbatchdojo.configuration.RemoteDataSourceConfiguration;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.After;
 import org.junit.Assert;
@@ -36,7 +34,7 @@ import java.nio.file.Path;
 @ActiveProfiles("test")
 @EnableAutoConfiguration
 @RunWith(SpringRunner.class)
-@ContextConfiguration(classes = {SpringBatchDojoApplication.class, PrimaryDataSourceConfiguration.class, RemoteDataSourceConfiguration.class, SpringBatchDojoJobConfiguration.class}, initializers = ConfigDataApplicationContextInitializer.class)
+@ContextConfiguration(classes = {SpringBatchDojoApplication.class}, initializers = ConfigDataApplicationContextInitializer.class)
 @TestExecutionListeners({DependencyInjectionTestExecutionListener.class, DirtiesContextTestExecutionListener.class})
 @DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_CLASS)
 public class SpringBatchDojoApplicationIntegrationTest {
@@ -76,6 +74,26 @@ public class SpringBatchDojoApplicationIntegrationTest {
 				new FileSystemResource(expectedFile),
 				new FileSystemResource(dumpFilePath + "/" + dumpFile)
 		);
+	}
+	
+	@Test
+	public void testFailedFtpUploadStep() {
+		final JobExecution jobExecution = jobLauncherTestUtils.launchStep("ftpUploadStep");
+		
+		Assert.assertEquals(BatchStatus.FAILED, jobExecution.getStatus());
+		
+		final ExitStatus exitStatus = jobExecution.getExitStatus();
+		Assert.assertEquals(ExitStatus.FAILED.getExitCode(), exitStatus.getExitCode());
+		Assert.assertTrue(exitStatus.getExitDescription().contains("java.lang.IllegalStateException"));
+		Assert.assertTrue(exitStatus.getExitDescription().contains("Unsuccessful file uploading!"));
+	}
+	
+	@Test
+	public void testSuccessFtpUploadStep() throws Exception {
+		testRemoteDumpStep();
+		final JobExecution jobExecution = jobLauncherTestUtils.launchStep("ftpUploadStep");
+		Assert.assertEquals(BatchStatus.COMPLETED, jobExecution.getStatus());
+		Assert.assertEquals(ExitStatus.COMPLETED, jobExecution.getExitStatus());
 	}
 	
 }
