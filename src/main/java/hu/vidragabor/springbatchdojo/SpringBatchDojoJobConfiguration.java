@@ -7,6 +7,9 @@ import org.springframework.batch.core.Job;
 import org.springframework.batch.core.Step;
 import org.springframework.batch.core.configuration.annotation.EnableBatchProcessing;
 import org.springframework.batch.core.configuration.annotation.JobBuilderFactory;
+import org.springframework.batch.core.job.builder.FlowBuilder;
+import org.springframework.batch.core.job.flow.Flow;
+import org.springframework.batch.core.job.flow.support.SimpleFlow;
 import org.springframework.batch.core.launch.support.RunIdIncrementer;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.cloud.openfeign.EnableFeignClients;
@@ -32,6 +35,7 @@ public class SpringBatchDojoJobConfiguration {
 	private final Step apiMarketplaceStep;
 	private final Step apiStatusStep;
 	private final Step ftpUploadStep;
+	private final FtpUploadDecider ftpUploadDecider;
 	
 	@Bean
 	public Job userStoreJob() {
@@ -39,14 +43,22 @@ public class SpringBatchDojoJobConfiguration {
 		return jobBuilderFactory
 				.get(appName)
 				.incrementer(new RunIdIncrementer())
+				.listener(jobListener)
 				.start(remoteDumpStep)
 				.next(remoteLoadStep)
-				.next(createFileStep)
+				.next(ftpUploadDecider)
+				.from(ftpUploadDecider).on(FtpUploadDecider.ENABLED).to(ftpUploadStep).next(further())
+				.from(ftpUploadDecider).on(FtpUploadDecider.DISABLED).to(further())
+				.end()
+				.build();
+	}
+	
+	private Flow further() {
+		return new FlowBuilder<SimpleFlow>("smart-ftp-flow")
+				.start(createFileStep)
 				.next(userStoreStep)
 				.next(apiMarketplaceStep)
 				.next(apiStatusStep)
-				.next(ftpUploadStep)
-				.listener(jobListener)
-				.build();
+				.end();
 	}
 }

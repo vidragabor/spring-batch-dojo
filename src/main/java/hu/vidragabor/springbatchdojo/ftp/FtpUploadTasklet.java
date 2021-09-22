@@ -1,6 +1,5 @@
 package hu.vidragabor.springbatchdojo.ftp;
 
-import hu.vidragabor.springbatchdojo.ftp.decider.FtpUploadDecider;
 import hu.vidragabor.springbatchdojo.ftp.service.FtpService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -26,16 +25,13 @@ public class FtpUploadTasklet implements Tasklet {
 	private String remoteFileName;
 	
 	private final FtpService ftpService;
-	private final FtpUploadDecider ftpUploadDecider;
 	
 	@Override
 	public RepeatStatus execute(@NonNull StepContribution stepContribution, @NonNull ChunkContext chunkContext) {
-		if (ftpUploadDecider.shouldUpload()) {
-			if (ftpService.uploadFile(new File(origDumpFile), remoteFileName)) {
-				log.info("File uploading is successful!");
-			} else {
-				log.error("Unsuccessful file uploading!");
-			}
+		if (ftpService.uploadFile(new File(origDumpFile), remoteFileName)) {
+			log.info("File uploading is successful!");
+		} else {
+			log.error("Unsuccessful file uploading!");
 		}
 		return RepeatStatus.FINISHED;
 	}
