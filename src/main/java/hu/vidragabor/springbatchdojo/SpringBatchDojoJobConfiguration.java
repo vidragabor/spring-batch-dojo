@@ -10,7 +10,6 @@ import org.springframework.batch.core.configuration.annotation.EnableBatchProces
 import org.springframework.batch.core.configuration.annotation.JobBuilderFactory;
 import org.springframework.batch.core.job.builder.FlowBuilder;
 import org.springframework.batch.core.job.flow.Flow;
-import org.springframework.batch.core.job.flow.FlowExecutionStatus;
 import org.springframework.batch.core.job.flow.support.SimpleFlow;
 import org.springframework.batch.core.launch.support.RunIdIncrementer;
 import org.springframework.beans.factory.annotation.Value;
@@ -37,6 +36,7 @@ public class SpringBatchDojoJobConfiguration {
 	private final Step apiMarketplaceStep;
 	private final Step apiStatusStep;
 	private final Step ftpUploadStep;
+	private final FtpUploadDecider ftpUploadDecider;
 	
 	@Bean
 	public Job userStoreJob() {
@@ -44,13 +44,13 @@ public class SpringBatchDojoJobConfiguration {
 		return jobBuilderFactory
 				.get(appName)
 				.incrementer(new RunIdIncrementer())
+				.listener(jobListener)
 				.start(remoteDumpStep)
 				.next(remoteLoadStep)
-				.next(new FtpUploadDecider())
-				.on(FlowExecutionStatus.COMPLETED.getName()).to(ftpUploadStep).next(further())
-				.on(FlowExecutionStatus.STOPPED.getName()).to(further())
+				.next(ftpUploadDecider)
+				.from(ftpUploadDecider).on(FtpUploadDecider.ENABLED).to(ftpUploadStep).next(further())
+				.from(ftpUploadDecider).on(FtpUploadDecider.DISABLED).to(further())
 				.end()
-				.listener(jobListener)
 				.build();
 	}
 	

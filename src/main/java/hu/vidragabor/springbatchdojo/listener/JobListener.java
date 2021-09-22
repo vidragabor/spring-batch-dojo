@@ -24,6 +24,7 @@ public class JobListener extends JobExecutionListenerSupport {
 	@SneakyThrows
 	@Override
 	public void afterJob(JobExecution jobExecution) {
+		log.info("jobExecution.getStatus(): " + jobExecution.getStatus());
 		if (jobExecution.getStatus() == BatchStatus.COMPLETED) {
 			if (fileDeletable) {
 				log.info("Remote dump file is deletable.");
