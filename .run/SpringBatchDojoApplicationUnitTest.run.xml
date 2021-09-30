@@ -1,6 +1,6 @@
 <component name="ProjectRunConfigurationManager">
-  <configuration default="false" name="SpringBatchDojoApplicationUnitTest" type="JUnit" factoryName="JUnit">
-    <module name="spring-batch-dojo" />
+  <configuration default="false" name="SpringBatchDojoApplicationUnitTest" type="JUnit" factoryName="JUnit" nameIsGenerated="true">
+    <module name="application" />
     <extension name="coverage">
       <pattern>
         <option name="PATTERN" value="hu.vidragabor.springbatchdojo.*" />

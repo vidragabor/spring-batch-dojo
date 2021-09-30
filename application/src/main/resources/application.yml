@@ -1,0 +1,45 @@
+spring:
+  application:
+    name: '@project.parent.artifactId@'
+  main:
+    banner-mode: 'off'
+  datasource:
+    url: jdbc:postgresql://localhost:5433/postgres
+    username: postgres-user
+    password: postgres-1234
+    driverClassName: org.postgresql.Driver
+  batch:
+    jdbc:
+      initialize-schema: always
+
+file:
+  path: tmp
+  name-prefix: source_user_
+
+remote:
+  datasource:
+    url: jdbc:postgresql://localhost:5434/postgres
+    username: postgres-user
+    password: postgres-1234
+    driverClassName: org.postgresql.Driver
+  dump:
+    file:
+      path: tmp
+      name: remote_user.csv
+      delete: true
+
+mockaroo:
+  name: mockaroo
+  url: https://my.api.mockaroo.com
+  key: 63304c70
+
+ftp:
+  host: localhost
+  port: 2121
+  username: admin
+  password: admin
+  timeout: 5000
+  file:
+    name: new_file.csv
+  upload:
+    threshold: 5

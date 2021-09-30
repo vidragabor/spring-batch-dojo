@@ -1,6 +1,6 @@
 <component name="ProjectRunConfigurationManager">
   <configuration default="false" name="SpringBatchDojoApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot">
-    <module name="spring-batch-dojo" />
+    <module name="application" />
     <option name="SPRING_BOOT_MAIN_CLASS" value="hu.vidragabor.springbatchdojo.SpringBatchDojoApplication" />
     <option name="ALTERNATIVE_JRE_PATH" />
     <option name="SHORTEN_COMMAND_LINE" value="NONE" />
