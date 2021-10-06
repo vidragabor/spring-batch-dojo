@@ -22,6 +22,7 @@ public class RemoteDumpWriterConfiguration {
 	public FlatFileItemWriter<User> remoteDumpWriter() {
 		return new FlatFileItemWriterBuilder<User>()
 				.name("remoteDumpWriter")
+				.append(true)
 				.resource(new FileSystemResource(fileName))
 				.delimited()
 				.delimiter(DELIMITER_TAB)
